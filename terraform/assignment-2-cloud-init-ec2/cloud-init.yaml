@@ -1,0 +1,28 @@
+#cloud-config
+
+package_update: true
+package_upgrade: false
+
+packages:
+  - apache2
+
+write_files:
+  - path: /var/www/html/index.html
+    owner: www-data:www-data
+    permissions: '0644'
+    content: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Terraform Cloud-Init Deployment</title>
+      </head>
+      <body>
+        <h1>EC2 Deployment with Cloud-Init</h1>
+        <p>This web server was deployed using Terraform and configured automatically with cloud-init.</p>
+        <p>No manual setup was required after the EC2 instance launched.</p>
+      </body>
+      </html>
+
+runcmd:
+  - systemctl enable apache2
+  - systemctl start apache2
